@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chi Tiết Sản Phẩm</title>
+
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+
+        :root{
+            --primary-color:#ff4757;
+            --secondary-color:#2f3542;
+        }
+
+        body{
+            background:#f5f6fa;
+            font-family:'Segoe UI',sans-serif;
+        }
+
+        /* NAVBAR */
+        .navbar{
+            background:rgba(47,53,66,.95)!important;
+            border-bottom:3px solid var(--primary-color);
+        }
+
+        /* PRODUCT IMAGE */
+        .product-image{
+            width:100%;
+            border-radius:30px;
+            object-fit:cover;
+            box-shadow:0 15px 30px rgba(0,0,0,.1);
+        }
+
+        /* PRODUCT INFO */
+        .product-info{
+            background:white;
+            border-radius:30px;
+            padding:40px;
+            box-shadow:0 10px 25px rgba(0,0,0,.05);
+        }
+
+        /* PRICE */
+        .product-price{
+            color:var(--primary-color);
+            font-size:42px;
+            font-weight:700;
+        }
+
+        /* BUTTON */
+        .buy-btn{
+            background:var(--primary-color);
+            color:white;
+            border:none;
+            border-radius:50px;
+            padding:15px 35px;
+            font-size:18px;
+            font-weight:600;
+            transition:.3s;
+        }
+
+        .buy-btn:hover{
+            background:#ff6b81;
+            transform:translateY(-3px);
+            color:white;
+        }
+
+        /* QUANTITY */
+        .qty-btn{
+            width:45px;
+            height:45px;
+            border-radius:50%;
+            border:none;
+            background:#f1f2f6;
+            font-size:20px;
+            font-weight:bold;
+            transition:.3s;
+        }
+
+        .qty-btn:hover{
+            background:var(--primary-color);
+            color:white;
+        }
+
+        /* BACK BUTTON */
+        .back-btn{
+            border-radius:50px;
+            padding:10px 25px;
+        }
+
+        /* FOOTER */
+        footer{
+            background:var(--secondary-color);
+            color:#ddd;
+            margin-top:100px;
+            padding:50px 0 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark py-3">
+
+    <div class="container">
+
+        <a href="index.html"
+           class="navbar-brand fw-bold fs-3">
+
+            <span class="text-danger">FF</span> EXPRESS
+
+        </a>
+
+    </div>
+
+</nav>
+
+<!-- CONTENT -->
+<div class="container py-5">
+
+    <!-- BACK -->
+    <a href="index.html"
+       class="btn btn-dark back-btn mb-5">
+
+        <i class="fas fa-arrow-left me-2"></i>
+
+        Quay lại
+
+    </a>
+
+    <div class="row align-items-center g-5">
+
+        <!-- IMAGE -->
+        <div class="col-lg-6">
+
+            <img id="productImage"
+                 src=""
+                 class="product-image">
+
+        </div>
+
+        <!-- INFO -->
+        <div class="col-lg-6">
+
+            <div class="product-info">
+
+                <span class="badge bg-danger mb-3 px-3 py-2">
+                    Món ăn nổi bật
+                </span>
+
+                <h1 id="productTitle"
+                    class="fw-bold mb-4">
+                </h1>
+
+                <div id="productPrice"
+                     class="product-price mb-4">
+                </div>
+
+                <p id="productDesc"
+                   class="text-muted fs-5 lh-lg mb-4">
+                </p>
+
+                <!-- EXTRA INFO -->
+                <div class="mb-4">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <i class="fas fa-star text-warning me-2"></i>
+
+                        <span class="fw-semibold">
+                            Đánh giá: 4.9/5
+                        </span>
+
+                    </div>
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <i class="fas fa-clock text-danger me-2"></i>
+
+                        <span>
+                            Giao hàng trong 20 - 30 phút
+                        </span>
+
+                    </div>
+
+                    <div class="d-flex align-items-center">
+
+                        <i class="fas fa-fire text-danger me-2"></i>
+
+                        <span>
+                            Món ăn bán chạy tuần này
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- QUANTITY -->
+                <div class="d-flex align-items-center gap-3 mb-4">
+
+                    <button class="qty-btn"
+                            onclick="decreaseQty()">
+
+                        -
+
+                    </button>
+
+                    <span id="qty"
+                          class="fw-bold fs-3">
+
+                        1
+
+                    </span>
+
+                    <button class="qty-btn"
+                            onclick="increaseQty()">
+
+                        +
+
+                    </button>
+
+                </div>
+
+                <!-- BUTTON -->
+                <button class="buy-btn w-100">
+
+                    <i class="fas fa-cart-plus me-2"></i>
+
+                    Thêm vào giỏ hàng
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="container text-center">
+
+        <h4 class="fw-bold text-white">
+            FF EXPRESS
+        </h4>
+
+        <p class="mt-3">
+            Fast Food Premium Delivery Interface
+        </p>
+
+        <div class="mt-4">
+
+            <i class="fab fa-facebook-f mx-2"></i>
+
+            <i class="fab fa-instagram mx-2"></i>
+
+            <i class="fab fa-youtube mx-2"></i>
+
+            <i class="fab fa-tiktok mx-2"></i>
+
+        </div>
+
+    </div>
+
+</footer>
+
+<!-- SCRIPT -->
+<script>
+
+    // LẤY ID TỪ URL
+    const params = new URLSearchParams(window.location.search);
+
+    const id = params.get('id');
+
+    // DATA PRODUCTS
+    const products = {
+
+        1: {
+            title: "Classic Burger",
+            price: "65.000đ",
+            desc: "Burger bò Mỹ cao cấp cùng rau xanh, phô mai cheddar và sốt đặc biệt.",
+            image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500"
+        },
+
+        2: {
+            title: "Pizza Hải Sản",
+            price: "149.000đ",
+            desc: "Pizza Ý hải sản tươi ngon với phô mai kéo sợi cực hấp dẫn.",
+            image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500"
+        },
+
+        3: {
+            title: "Gà Rán Giòn Rụm",
+            price: "45.000đ",
+            desc: "Gà chiên giòn vàng ruộm với lớp bột cay đặc biệt.",
+            image: "https://images.unsplash.com/photo-1562967914-608f82629710?w=500"
+        },
+
+        4: {
+            title: "Salad Rau Củ",
+            price: "55.000đ",
+            desc: "Salad rau củ tươi sạch giúp cân bằng dinh dưỡng mỗi ngày.",
+            image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=500"
+        },
+
+        5: {
+            title: "Cheese Burger",
+            price: "85.000đ",
+            desc: "Burger bò cao cấp với lớp phô mai tan chảy gấp đôi.",
+            image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500"
+        },
+
+        6: {
+            title: "Khoai Tây Lắc Phô Mai",
+            price: "35.000đ",
+            desc: "Khoai tây chiên vàng giòn phủ lớp phô mai béo ngậy.",
+            image: "https://images.unsplash.com/photo-1630384066202-18746b53b1e2?w=500"
+        }
+
+    };
+
+    // CHECK PRODUCT
+    const product = products[id];
+
+    // HIỂN THỊ
+    if(product){
+
+        document.getElementById('productTitle').innerText = product.title;
+
+        document.getElementById('productPrice').innerText = product.price;
+
+        document.getElementById('productDesc').innerText = product.desc;
+
+        document.getElementById('productImage').src = product.image;
+
+    }else{
+
+        document.body.innerHTML = `
+            <div class="container text-center py-5">
+
+                <h1 class="text-danger">
+                    Không tìm thấy sản phẩm
+                </h1>
+
+                <a href="index.html"
+                   class="btn btn-dark mt-4">
+
+                    Quay lại trang chủ
+
+                </a>
+
+            </div>
+        `;
+    }
+
+    // QUANTITY
+    function increaseQty(){
+
+        let qty = document.getElementById('qty');
+
+        qty.innerText = parseInt(qty.innerText) + 1;
+    }
+
+    function decreaseQty(){
+
+        let qty = document.getElementById('qty');
+
+        if(parseInt(qty.innerText) > 1){
+
+            qty.innerText = parseInt(qty.innerText) - 1;
+        }
+    }
+
+</script>
+
+</body>
+</html>

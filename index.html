@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastFood Express - Premium Interface</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #ff4757;
+            --secondary-color: #2f3542;
+            --accent-color: #ffa502;
+        }
+
+        body {
+            background-color: #f1f2f6;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* HEADER */
+        .main-header {
+            background:
+                linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200');
+
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 90px 0;
+            text-align: center;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: rgba(47, 53, 66, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        /* PRODUCT CARD */
+        .product-card {
+            border: none;
+            border-radius: 22px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            background: white;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 18px 35px rgba(255, 71, 87, 0.2);
+        }
+
+        .product-card img {
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .btn-buy {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50px;
+            padding: 10px 18px;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn-buy:hover {
+            background: #ff6b81;
+            transform: scale(1.05);
+            color: white;
+        }
+
+        /* SIDEBAR */
+        .sidebar-card {
+            border: none;
+            border-radius: 24px;
+            background: white;
+            padding: 25px;
+            position: sticky;
+            top: 100px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+
+        /* SOCIAL SIDEBAR */
+        .social-sidebar-link{
+            display:flex;
+            align-items:center;
+            gap:14px;
+            padding:12px;
+            border-radius:16px;
+            text-decoration:none;
+            background:#f8f9fa;
+            transition:0.3s;
+        }
+
+        .social-sidebar-link:hover{
+            transform:translateX(5px);
+            background:#eef1f5;
+        }
+
+        .social-sidebar-icon{
+            width:50px;
+            height:50px;
+            border-radius:15px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:white;
+            font-size:20px;
+            flex-shrink:0;
+        }
+
+        .facebook{
+            background:linear-gradient(135deg,#1877f2,#0d6efd);
+        }
+
+        .instagram{
+            background:linear-gradient(135deg,#f09433,#dc2743,#cc2366);
+        }
+
+        .youtube{
+            background:linear-gradient(135deg,#ff0000,#cc0000);
+        }
+
+        .tiktok{
+            background:linear-gradient(135deg,#111,#25f4ee);
+        }
+
+        /* SUPPORT BOX */
+        .support-box{
+            background:linear-gradient(145deg,#f8f9fa,#ffffff);
+            border:1px solid #ececec;
+        }
+
+        .support-icon{
+            width:38px;
+            height:38px;
+            border-radius:12px;
+            background:linear-gradient(135deg,#ff4757,#ff6b81);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:white;
+            font-size:15px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--secondary-color);
+            color: #ced4da;
+            padding: 70px 0 30px;
+            margin-top: 80px;
+        }
+
+        footer h5 {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        footer h5::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 40px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+
+        footer a {
+            color: #ced4da;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        footer a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        .social-icons a {
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+
+        <a class="navbar-brand fw-bold fs-3" href="#">
+            <span class="text-danger">Kim Ngân</span> Fast Food
+        </a>
+
+        <div class="d-flex align-items-center order-lg-3">
+            <a href="#" class="text-white me-3 fs-5">
+                <i class="fas fa-search"></i>
+            </a>
+
+            <a href="#" class="text-white fs-5 position-relative">
+                <i class="fas fa-shopping-cart"></i>
+
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                      style="font-size:10px;">
+                    3
+                </span>
+            </a>
+        </div>
+
+        <button class="navbar-toggler ms-2"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#mainNav">
+
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link active px-3" href="#">
+                        TRANG CHỦ
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link px-3" href="#menu">
+                        THỰC ĐƠN
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link px-3" href="#">
+                        KHUYẾN MÃI
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link px-3" href="#">
+                        LIÊN HỆ
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+<!-- HEADER -->
+<header class="main-header">
+    <div class="container">
+
+        <h1 class="display-3 fw-bolder mb-3">
+            Thưởng Thức Vị Ngon Trọn Vẹn
+        </h1>
+
+        <p class="fs-4 opacity-75">
+            Giảm ngay 20% cho đơn hàng đầu tiên đặt qua Web
+        </p>
+
+        <button class="btn btn-buy btn-lg mt-4 px-5 shadow">
+            ĐẶT HÀNG NGAY
+        </button>
+
+    </div>
+</header>
+
+<!-- CONTENT -->
+<div class="container my-5">
+    <div class="row">
+
+        <!-- PRODUCT -->
+        <div class="col-lg-9" id="menu">
+
+            <div class="d-flex justify-content-between align-items-center mb-5">
+
+                <h2 class="fw-bold m-0">
+                    Sản Phẩm Nổi Bật
+                </h2>
+
+                <select class="form-select w-auto border-0 shadow-sm">
+                    <option>Sắp xếp: Mới nhất</option>
+                    <option>Giá tăng dần</option>
+                </select>
+
+            </div>
+
+            <div class="row g-4">
+                
+
+                <!-- PRODUCT 1 -->
+        <div class="col-md-6 col-xl-4">
+            <a href="product.html?id=1" class="text-decoration-none text-dark">
+                <div class="card h-100 product-card">
+                    <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold">Classic Burger</h5>
+                        <p class="text-muted small">Bò nướng, phô mai, rau tươi</p>
+                        <span class="text-danger fw-bold">65.000đ</span>
+                        <a href="product.html?id=1" class="btn btn-buy w-100 mt-3 shadow-sm">
+                            <i class="fas fa-eye me-2"></i> Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- PRODUCT 2 -->
+        <div class="col-md-6 col-xl-4">
+            <a href="product.html?id=2" class="text-decoration-none text-dark">
+                <div class="card h-100 product-card">
+                    <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold">Pizza Hải Sản</h5>
+                        <p class="text-muted small">Tôm, mực, sốt đặc biệt</p>
+                        <span class="text-danger fw-bold">149.000đ</span>
+                        <a href="product.html?id=2" class="btn btn-buy w-100 mt-3 shadow-sm">
+                            <i class="fas fa-eye me-2"></i> Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- PRODUCT 3 -->
+        <div class="col-md-6 col-xl-4">
+            <a href="product.html?id=3" class="text-decoration-none text-dark">
+                <div class="card h-100 product-card">
+                    <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=500">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold">Gà Rán Giòn Rụm</h5>
+                        <p class="text-muted small">Đùi gà tẩm bột chiên</p>
+                        <span class="text-danger fw-bold">45.000đ</span>
+                        <a href="product.html?id=3" class="btn btn-buy w-100 mt-3 shadow-sm">
+                            <i class="fas fa-eye me-2"></i> Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- PRODUCT 4 -->
+        <div class="col-md-6 col-xl-4">
+            <a href="product.html?id=4" class="text-decoration-none text-dark">
+                <div class="card h-100 product-card">
+                    <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=500">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold">Salad Rau Củ</h5>
+                        <p class="text-muted small">Salad tươi cùng các loại sốt</p>
+                        <span class="text-danger fw-bold">55.000đ</span>
+                        <a href="product.html?id=4" class="btn btn-buy w-100 mt-3 shadow-sm">
+                            <i class="fas fa-eye me-2"></i> Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- PRODUCT 5 -->
+        <div class="col-md-6 col-xl-4">
+            <a href="product.html?id=5" class="text-decoration-none text-dark">
+                <div class="card h-100 product-card">
+                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold">Cheese Burger</h5>
+                        <p class="text-muted small">Burger kèm sốt kem thơm</p>
+                        <span class="text-danger fw-bold">85.000đ</span>
+                        <a href="product.html?id=5" class="btn btn-buy w-100 mt-3 shadow-sm">
+                            <i class="fas fa-eye me-2"></i> Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- PRODUCT 6 -->
+        <div class="col-md-6 col-xl-4">
+            <a href="product.html?id=6" class="text-decoration-none text-dark">
+                <div class="card h-100 product-card">
+                    <img src="https://cdn.tgdd.vn/2021/07/CookProduct/khoai-tay-chien-bao-nhieu-calo-an-khoai-lang-hay-khoai-tay-chien-tot-hon-00-1200x676.jpg">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold">Khoai tây chiên</h5>
+                        <p class="text-muted small">Khoai tây chiên giòn tan</p>
+                        <span class="text-danger fw-bold">35.000đ</span>
+                        <a href="product.html?id=6" class="btn btn-buy w-100 mt-3 shadow-sm">
+                            <i class="fas fa-eye me-2"></i> Xem chi tiết
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+            </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="col-lg-3 mt-5 mt-lg-0">
+
+            <div class="sidebar-card">
+
+                <!-- SOCIAL -->
+                <h5 class="fw-bold mb-4 border-bottom pb-2">
+                    Cộng Đồng MXH
+                </h5>
+
+                <div class="d-flex flex-column gap-3 mb-5">
+
+                    <a href="#" class="social-sidebar-link">
+                        <div class="social-sidebar-icon facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </div>
+
+                        <div>
+                            <div class="fw-semibold text-dark">
+                                Facebook
+                            </div>
+
+                            <small class="text-muted">
+                                Theo dõi ưu đãi mới
+                            </small>
+                        </div>
+                    </a>
+
+                    <a href="#" class="social-sidebar-link">
+                        <div class="social-sidebar-icon instagram">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+
+                        <div>
+                            <div class="fw-semibold text-dark">
+                                Instagram
+                            </div>
+
+                            <small class="text-muted">
+                                Hình ảnh món ăn đẹp
+                            </small>
+                        </div>
+                    </a>
+
+                    <a href="#" class="social-sidebar-link">
+                        <div class="social-sidebar-icon youtube">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+
+                        <div>
+                            <div class="fw-semibold text-dark">
+                                YouTube
+                            </div>
+
+                            <small class="text-muted">
+                                Video review món ăn
+                            </small>
+                        </div>
+                    </a>
+
+                    <a href="#" class="social-sidebar-link">
+                        <div class="social-sidebar-icon tiktok">
+                            <i class="fab fa-tiktok"></i>
+                        </div>
+
+                        <div>
+                            <div class="fw-semibold text-dark">
+                                TikTok
+                            </div>
+
+                            <small class="text-muted">
+                                Trend món ăn hot
+                            </small>
+                        </div>
+                    </a>
+
+                </div>
+
+                <!-- CATEGORY -->
+                <h5 class="fw-bold mb-4 border-bottom pb-2">
+                    Danh Mục
+                </h5>
+
+                <ul class="list-unstyled">
+
+                    <li class="mb-3">
+                        <a href="#" class="text-dark text-decoration-none d-flex justify-content-between">
+                            <span>Burger</span>
+                            <span class="badge bg-light text-dark">12</span>
+                        </a>
+                    </li>
+
+                    <li class="mb-3">
+                        <a href="#" class="text-dark text-decoration-none d-flex justify-content-between">
+                            <span>Pizza</span>
+                            <span class="badge bg-light text-dark">8</span>
+                        </a>
+                    </li>
+
+                    <li class="mb-3">
+                        <a href="#" class="text-dark text-decoration-none d-flex justify-content-between">
+                            <span>Nước uống</span>
+                            <span class="badge bg-light text-dark">15</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+                <!-- SUPPORT -->
+                <div class="mt-5 p-4 rounded-4 support-box">
+
+                    <h6 class="fw-bold d-flex align-items-center">
+
+                        <div class="support-icon me-2">
+                            <i class="fas fa-comments"></i>
+                        </div>
+
+                        Hỗ trợ 24/7
+                    </h6>
+
+                    <p class="small text-muted mb-0 mt-2">
+                        Liên hệ ngay nếu bạn gặp vấn đề khi đặt hàng.
+                    </p>
+
+                    <a href="tel:19001234"
+                       class="fw-bold text-danger d-block mt-2 fs-5">
+                        1900 1234
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+
+        <div class="row g-4">
+
+            <div class="col-lg-4">
+
+                <h4 class="text-white fw-bold mb-4">
+                    FF EXPRESS
+                </h4>
+
+                <p class="small pe-lg-5">
+                    Chúng tôi tự hào là đơn vị cung cấp thực phẩm nhanh sạch nhất,
+                    ngon nhất và dịch vụ giao hàng chuyên nghiệp nhất khu vực.
+                </p>
+
+                <div class="social-icons mt-4">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+
+            </div>
+
+            <div class="col-6 col-lg-2">
+
+                <h5>Liên Kết</h5>
+
+                <ul class="list-unstyled small mt-4">
+                    <li class="mb-2"><a href="#">Về chúng tôi</a></li>
+                    <li class="mb-2"><a href="#">Thực đơn</a></li>
+                    <li class="mb-2"><a href="#">Khuyến mãi</a></li>
+                    <li class="mb-2"><a href="#">Tuyển dụng</a></li>
+                </ul>
+
+            </div>
+
+            <div class="col-6 col-lg-2">
+
+                <h5>Hỗ Trợ</h5>
+
+                <ul class="list-unstyled small mt-4">
+                    <li class="mb-2"><a href="#">Chính sách giao hàng</a></li>
+                    <li class="mb-2"><a href="#">Bảo mật thông tin</a></li>
+                    <li class="mb-2"><a href="#">Câu hỏi thường gặp</a></li>
+                    <li class="mb-2"><a href="#">Góp ý dịch vụ</a></li>
+                </ul>
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <h5>Nhận Tin Khuyến Mãi</h5>
+
+                <p class="small mt-4">
+                    Đừng bỏ lỡ các ưu đãi hấp dẫn hàng tuần của chúng tôi.
+                </p>
+
+                <div class="input-group mb-3 mt-3 shadow-sm">
+
+                    <input type="text"
+                           class="form-control border-0 px-3"
+                           placeholder="Email của bạn">
+
+                    <button class="btn btn-danger px-3">
+                        GỬI
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <hr class="mt-5 mb-4 border-secondary opacity-25">
+
+        <div class="row align-items-center">
+
+            <div class="col-md-6 text-center text-md-start">
+
+                <p class="small mb-0">
+                    &copy; 2026 FF Express. All rights reserved.
+                </p>
+
+            </div>
+
+            <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+
+                <img src="https://img.icons8.com/color/48/000000/visa.png" width="30">
+
+                <img src="https://img.icons8.com/color/48/000000/mastercard.png"
+                     width="30"
+                     class="mx-2">
+
+                <img src="https://img.icons8.com/color/48/000000/paypal.png" width="30">
+
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
