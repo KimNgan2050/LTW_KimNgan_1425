@@ -1,0 +1,110 @@
+﻿@model BTT3_KimNgan.Models.Product
+
+@{
+    ViewData["Title"] = "Xác Nhận Xóa - Luxe Fashion";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+    .luxe-delete-container {
+        font-family: 'Inter', sans-serif;
+        max-width: 550px;
+        margin: 80px auto;
+        text-align: center;
+        color: #000;
+    }
+
+    .warning-title {
+        font-size: 18px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-weight: 500;
+        color: #d9534f;
+        margin-bottom: 15px;
+    }
+
+    .sub-title {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 40px;
+    }
+
+    .product-preview {
+        border: 1px solid #eee;
+        padding: 25px;
+        background: #fafafa;
+        margin-bottom: 40px;
+        text-align: left;
+    }
+
+    .preview-label {
+        font-size: 11px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: #888;
+        margin-bottom: 2px;
+    }
+
+    .preview-value {
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 15px;
+        color: #000;
+    }
+
+    .btn-delete {
+        background: #d9534f;
+        color: #fff;
+        border-radius: 0;
+        padding: 12px 30px;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 2px;
+        border: none;
+    }
+
+        .btn-delete:hover {
+            background: #c9302c;
+        }
+
+    .btn-cancel {
+        background: #000;
+        color: #fff;
+        border-radius: 0;
+        padding: 12px 30px;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 2px;
+        border: none;
+        text-decoration: none;
+        margin-left: 10px;
+    }
+
+        .btn-cancel:hover {
+            background: #222;
+            color: #fff;
+        }
+</style>
+
+<div class="container luxe-delete-container">
+    <h2 class="warning-title">Cảnh Báo Xóa</h2>
+    <p class="sub-title">Bạn có chắc chắn muốn gỡ bỏ hoàn toàn sản phẩm này khỏi hệ thống không?</p>
+
+    <div class="product-preview">
+        <div class="preview-label">Tên sản phẩm</div>
+        <div class="preview-value">@Model.Name</div>
+
+        <div class="preview-label">Mã sản phẩm (SKU)</div>
+        <div class="preview-value">@Model.Sku</div>
+
+        <div class="preview-label">Giá tiền</div>
+        <div class="preview-value" style="margin-bottom: 0;">$@Model.Price.ToString("F2")</div>
+    </div>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-delete">XÓA VĨNH VIỄN</button>
+        <a asp-action="Index" class="btn btn-cancel">HỦY BỎ</a>
+    </form>
+</div>

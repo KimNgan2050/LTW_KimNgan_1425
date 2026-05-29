@@ -1,0 +1,131 @@
+﻿@model BTT3_KimNgan.Models.Product
+
+@{
+    ViewData["Title"] = "Thêm Sản Phẩm Mới - Luxe Fashion";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+    .luxe-form-container {
+        font-family: 'Inter', sans-serif;
+        max-width: 600px;
+        margin: 60px auto;
+        color: #000000;
+    }
+
+    .form-title {
+        font-size: 20px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 400;
+        margin-bottom: 35px;
+        text-align: center;
+    }
+
+    .form-label {
+        font-size: 11px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .form-control, .form-select {
+        border-radius: 0;
+        border: 1px solid #e0e0e0;
+        padding: 12px;
+        font-size: 14px;
+        background-color: #ffffff;
+    }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #000000;
+            box-shadow: none;
+        }
+
+    .btn-submit {
+        background: #000000;
+        color: #ffffff;
+        border-radius: 0;
+        padding: 14px;
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 2px;
+        width: 100%;
+        border: none;
+        margin-top: 20px;
+        transition: background 0.2s;
+        font-weight: 600;
+    }
+
+        .btn-submit:hover {
+            background: #222222;
+        }
+
+    .back-link {
+        display: block;
+        text-align: center;
+        margin-top: 25px;
+        font-size: 13px;
+        color: #707070;
+        text-decoration: underline;
+    }
+</style>
+
+<div class="container luxe-form-container">
+    <h2 class="form-title">Thêm Sản Phẩm Mới</h2>
+
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3" style="font-size: 13px;"></div>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Tên Sản Phẩm</label>
+            <input asp-for="Name" class="form-control" placeholder="Ví dụ: MÁY TÍNH XÁCH TAY LUXE BOOK" />
+            <span asp-validation-for="Name" class="text-danger" style="font-size: 12px;"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Sku" class="form-label">Mã Sản Phẩm (SKU)</label>
+            <input asp-for="Sku" class="form-control" placeholder="Ví dụ: LAP-2026-LX-01" />
+            <span asp-validation-for="Sku" class="text-danger" style="font-size: 12px;"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Price" class="form-label">Giá Bán (VNĐ)</label>
+            <input asp-for="Price" class="form-control" type="number" placeholder="Ví dụ: 15500000" />
+            <span asp-validation-for="Price" class="text-danger" style="font-size: 12px;"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ImageUrl" class="form-label">Đường Dẫn Hình Ảnh (URL)</label>
+            <input asp-for="ImageUrl" class="form-control" placeholder="Dán trực tiếp link ảnh kết thúc bằng .jpg, .png vào đây" />
+            <span asp-validation-for="ImageUrl" class="text-danger" style="font-size: 12px;"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="CategoryId" class="form-label">Danh Mục Sản Phẩm</label>
+            <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.CategoryId">
+                <option value="">-- Chọn danh mục --</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger" style="font-size: 12px;"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="Description" class="form-label">Mô Tả Sản Phẩm</label>
+            <textarea asp-for="Description" class="form-control" rows="5" placeholder="Nhập cấu hình thiết bị hoặc thông tin chi tiết sản phẩm..."></textarea>
+            <span asp-validation-for="Description" class="text-danger" style="font-size: 12px;"></span>
+        </div>
+
+        <button type="submit" class="btn btn-submit">HOÀN TẤT THÊM MỚI</button>
+    </form>
+
+    <a asp-action="Index" class="back-link">Quay lại cửa hàng</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

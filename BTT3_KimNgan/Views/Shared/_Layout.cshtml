@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Luxe Fashion</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Toàn bộ trang web theo style Minimalist Luxury */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            flex: 1; /* Đẩy footer luôn nằm dưới cùng trang kể cả khi ít nội dung */
+        }
+
+        /* 1. THIẾT KẾ HEADER & NAVIGATION */
+        .luxe-header {
+            border-bottom: 1px solid #f2f2f2;
+            background-color: #ffffff;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .brand-logo {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #000000;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+            .brand-logo:hover {
+                color: #000000;
+                opacity: 0.7;
+            }
+
+        .nav-link-luxe {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #555555 !important;
+            padding: 5px 15px !important;
+            transition: color 0.2s;
+        }
+
+            .nav-link-luxe:hover {
+                color: #000000 !important;
+            }
+
+        /* Nút giỏ hàng có điểm nhấn nhẹ */
+        .cart-icon-btn {
+            border: 1px solid #000000;
+            padding: 6px 16px;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: #000000;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+            .cart-icon-btn:hover {
+                background-color: #000000;
+                color: #ffffff;
+            }
+
+        /* 2. THIẾT KẾ FOOTER SANG TRỌNG */
+        .luxe-footer {
+            background-color: #f9f9f9;
+            border-top: 1px solid #f2f2f2;
+            padding: 60px 0 30px 0;
+            margin-top: 80px;
+            font-size: 13px;
+            color: #666666;
+        }
+
+        .footer-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding-left: 0;
+        }
+
+            .footer-links li {
+                margin-bottom: 10px;
+            }
+
+            .footer-links a {
+                color: #666666;
+                text-decoration: none;
+                transition: color 0.2s;
+            }
+
+                .footer-links a:hover {
+                    color: #000000;
+                }
+
+        .newsletter-input {
+            border-radius: 0;
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            font-size: 13px;
+        }
+
+            .newsletter-input:focus {
+                border-color: #000000;
+                box-shadow: none;
+            }
+
+        .btn-newsletter {
+            border-radius: 0;
+            background-color: #000000;
+            color: #ffffff;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 10px 20px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="luxe-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+                    <a class="brand-logo" asp-area="" asp-controller="Home" asp-action="Index">LUXÉ</a>
+                </div>
+
+                <nav class="d-none d-md-flex">
+                    <a class="nav-link-luxe" asp-area="" asp-controller="Home" asp-action="Index">Trang Chủ</a>
+                    <a class="nav-link-luxe" asp-area="" asp-controller="Products" asp-action="Index">Cửa Hàng</a>
+                    <a class="nav-link-luxe" href="/Products?category=T-shirt">T-Shirt</a>
+                    <a class="nav-link-luxe" href="/Products?category=Hoodie">Hoodie</a>
+                </nav>
+
+                <div>
+                    <a class="cart-icon-btn" asp-controller="Cart" asp-action="Index">
+                        Giỏ Hàng
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <main role="main" class="main-content">
+        @RenderBody()
+    </main>
+
+    <footer class="luxe-footer">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-3 mb-4">
+                    <h6 class="footer-title">Về LUXÉ</h6>
+                    <p style="line-height: 1.7;">Thương hiệu thời trang cung cấp các thiết kế tối giản, chất liệu cao cấp mang lại vẻ đẹp vượt thời gian cho người mặc.</p>
+                </div>
+
+                <div class="col-md-3 mb-4 ps-md-5">
+                    <h6 class="footer-title">Dịch Vụ</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Hướng dẫn chọn Size</a></li>
+                        <li><a href="#">Chính sách đổi trả trong 7 ngày</a></li>
+                        <li><a href="#">Thông tin vận chuyển nhanh</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3 mb-4">
+                    <h6 class="footer-title">Liên Kết</h6>
+                    <ul class="footer-links">
+                        <li><a asp-controller="Products" asp-action="Index">Tất cả sản phẩm</a></li>
+                        <li><a href="/Products?category=Áo khoác">Bộ sưu tập Áo khoác</a></li>
+                        <li><a href="/Products?category=Váy đầm">Váy đầm Thu Đông</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3 mb-4">
+                    <h6 class="footer-title">Nhận Khuyến Mãi</h6>
+                    <p>Đăng ký nhận thông tin bộ sưu tập mới nhất.</p>
+                    <div class="input-group">
+                        <input type="email" class="form-control newsletter-input" placeholder="Email của bạn..." aria-label="Email">
+                        <button class="btn btn-newsletter" type="button">Gửi</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row mt-5 pt-4 border-top" style="border-color: #eee !important;">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="m-0" style="font-size: 11px; letter-spacing: 1px;">&copy; 2026 - BTT3_KimNgan. Đã đăng ký bản quyền.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end mt-2 mt-md-0" style="font-size: 11px; letter-spacing: 1px;">
+                    <span class="mx-2">Chất lượng</span> · <span class="mx-2">Tối giản</span> · <span class="mx-2">Tinh tế</span>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/css/bootstrap.min.css"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

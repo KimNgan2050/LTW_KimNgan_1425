@@ -1,0 +1,129 @@
+﻿@{
+    ViewData["Title"] = "Trang Chủ - Luxe Fashion";
+}
+
+<style>
+    /* Khu vực Banner lớn hoành tráng bao trọn màn hình */
+    .hero-section {
+        position: relative;
+        height: 75vh;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1600');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #fff;
+    }
+
+    .hero-content {
+        max-width: 700px;
+    }
+
+    .hero-sub {
+        font-size: 12px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
+
+    .hero-title {
+        font-size: 48px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 300;
+        margin-bottom: 30px;
+    }
+
+    .btn-luxe-explore {
+        background-color: #ffffff;
+        color: #000000;
+        border-radius: 0;
+        padding: 12px 35px;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 600;
+        border: none;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+        .btn-luxe-explore:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+    /* Khối giới thiệu bộ sưu tập phụ bên dưới */
+    .promo-section {
+        padding: 80px 0;
+        background-color: #ffffff;
+    }
+
+    .promo-box {
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 30px;
+        aspect-ratio: 16/10;
+    }
+
+        .promo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .promo-box:hover img {
+            transform: scale(1.03);
+        }
+
+    .promo-text-center {
+        text-align: center;
+        margin-top: 15px;
+    }
+
+    .promo-link {
+        font-size: 13px;
+        color: #000;
+        text-decoration: underline;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+</style>
+
+<!-- BANNER CHÍNH CỦA TRANG CHỦ -->
+<div class="hero-section">
+    <div class="hero-content animate__animated animate__fadeIn">
+        <p class="hero-sub">Mùa giải mới / BỘ SƯU TẬP 2026</p>
+        <h1 class="hero-title">Kiến tạo phong cách<br>tối giản bền vững</h1>
+        <a href="/Products" class="btn-luxe-explore">Khám phá cửa hàng</a>
+    </div>
+</div>
+
+<!-- KHỐI ALBUM ẢNH LOOKBOOK PHỤ BÊN DƯỚI -->
+<div class="container promo-section">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="promo-box">
+                <img src="https://images.unsplash.com/photo-1485968579580-b6d095142e6e?q=80&w=800" alt="Dresses Collection" />
+            </div>
+            <div class="promo-text-center">
+                <h5 class="text-uppercase" style="font-size:14px; letter-spacing:1px; font-weight:600;">Dòng sản phẩm cao cấp</h5>
+                <a href="/Products?category=Váy đầm" class="promo-link">Xem bộ sưu tập</a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="promo-box">
+                <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=800" alt="T-Shirt Collection" />
+            </div>
+            <div class="promo-text-center">
+                <h5 class="text-uppercase" style="font-size:14px; letter-spacing:1px; font-weight:600;">Trang phục dạo phố thường ngày</h5>
+                <a href="/Products?category=T-shirt" class="promo-link">Xem bộ sưu tập</a>
+            </div>
+        </div>
+    </div>
+</div>
