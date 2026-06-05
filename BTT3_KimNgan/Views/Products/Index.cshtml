@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BTT3_KimNgan.Models.Product>
+@model IEnumerable<BTT3_KimNgan.Models.Product>
 
 @{
     ViewData["Title"] = "Tất Cả Sản Phẩm - Luxe Fashion";
@@ -134,6 +134,50 @@
                 text-decoration: underline;
                 color: #707070;
             }
+
+    /* PHÂN TRANG LUXÉ TỐI GIẢN */
+    .luxe-pagination {
+        font-family: 'Inter', sans-serif;
+        margin-top: 50px;
+        margin-bottom: 30px;
+    }
+
+    .pag-num {
+        font-size: 14px;
+        color: #707070;
+        text-decoration: none;
+        padding-bottom: 5px;
+        border-bottom: 1.5px solid transparent;
+        transition: all 0.2s;
+        min-width: 24px;
+        text-align: center;
+        display: inline-block;
+        font-weight: 400;
+    }
+
+    .pag-num:hover {
+        color: #000;
+    }
+
+    .pag-num.active {
+        color: #000;
+        font-weight: 500;
+        border-bottom: 1.5px solid #000;
+    }
+
+    .pag-arrow {
+        font-size: 13px;
+        color: #000;
+        text-decoration: none;
+        transition: opacity 0.2s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .pag-arrow:hover {
+        opacity: 0.7;
+    }
 </style>
 
 <div class="container luxe-shop-container">
@@ -208,6 +252,34 @@
                     </div>
                 }
             </div>
+
+            <!-- PHÂN TRANG LUXÉ -->
+            @if (ViewBag.TotalPages > 1)
+            {
+                <div class="luxe-pagination d-flex justify-content-center align-items-center mt-5 gap-4">
+                    @if (ViewBag.CurrentPage > 1)
+                    {
+                        <a href="/Products?category=@ViewBag.CurrentCategory&page=@(ViewBag.CurrentPage - 1)" class="pag-arrow">◀</a>
+                    }
+                    
+                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        if (i == ViewBag.CurrentPage)
+                        {
+                            <span class="pag-num active">@i</span>
+                        }
+                        else
+                        {
+                            <a href="/Products?category=@ViewBag.CurrentCategory&page=@i" class="pag-num">@i</a>
+                        }
+                    }
+
+                    @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                    {
+                        <a href="/Products?category=@ViewBag.CurrentCategory&page=@(ViewBag.CurrentPage + 1)" class="pag-arrow">▶</a>
+                    }
+                </div>
+            }
         </div>
     </div>
 </div>

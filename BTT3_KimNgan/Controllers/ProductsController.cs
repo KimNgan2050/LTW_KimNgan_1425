@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,8 +22,10 @@ namespace BTT3_KimNgan.Controllers
         // ==========================================================
         // 1. TRANG DANH SÁCH SẢN PHẨM (Có tích hợp bộ lọc tiếng Việt)
         // ==========================================================
-        public async Task<IActionResult> Index(string category)
+        public async Task<IActionResult> Index(string category, int page = 1)
         {
+            if (page < 1) page = 1;
+
             var productsQuery = _context.Products.Include(p => p.Category).AsQueryable();
 
             if (!string.IsNullOrEmpty(category))
@@ -32,8 +34,21 @@ namespace BTT3_KimNgan.Controllers
                 productsQuery = productsQuery.Where(p => p.Category!.Name.Equals(category));
             }
 
+            int pageSize = 9;
+            int totalItems = await productsQuery.CountAsync();
+            int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+            if (page > totalPages && totalPages > 0) page = totalPages;
+
+            var products = await productsQuery
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
             ViewBag.CurrentCategory = category;
-            var products = await productsQuery.ToListAsync();
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
             return View(products);
         }
 

@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model RegisterModel
 @{
     ViewData["Title"] = "Đăng ký";
@@ -26,6 +26,12 @@
                         <input asp-for="Input.Email" class="form-control luxe-input" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                         <label asp-for="Input.Email" class="form-label">Địa chỉ Email</label>
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Address" class="form-control luxe-input" aria-required="true" placeholder="Địa chỉ của bạn" />
+                        <label asp-for="Input.Address" class="form-label">Địa chỉ</label>
+                        <span asp-validation-for="Input.Address" class="text-danger"></span>
                     </div>
 
                     <div class="form-floating mb-3">

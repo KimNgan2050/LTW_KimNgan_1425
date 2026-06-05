@@ -94,6 +94,35 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<ApplicationDbContext>();
 
+        // Tự động khởi tạo các Role nếu chưa có
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        string[] roleNames = { BTT3_KimNgan.Models.SD.Role_Admin, BTT3_KimNgan.Models.SD.Role_Employee, BTT3_KimNgan.Models.SD.Role_Customer, BTT3_KimNgan.Models.SD.Role_Company };
+        foreach (var roleName in roleNames)
+        {
+            if (!roleManager.RoleExistsAsync(roleName).GetAwaiter().GetResult())
+            {
+                roleManager.CreateAsync(new IdentityRole(roleName)).GetAwaiter().GetResult();
+            }
+        }
+
+        // Tự động khởi tạo tài khoản Admin mặc định nếu hệ thống chưa có tài khoản nào
+        var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+        if (!userManager.Users.Any())
+        {
+            var adminUser = new ApplicationUser
+            {
+                UserName = "admin@luxe.com",
+                Email = "admin@luxe.com",
+                FullName = "LUXÉ Administrator",
+                EmailConfirmed = true
+            };
+            var result = userManager.CreateAsync(adminUser, "Admin123!").GetAwaiter().GetResult();
+            if (result.Succeeded)
+            {
+                userManager.AddToRoleAsync(adminUser, BTT3_KimNgan.Models.SD.Role_Admin).GetAwaiter().GetResult();
+            }
+        }
+
         // Xóa sạch danh mục và sản phẩm cũ nếu phát hiện dữ liệu mẫu tiếng Anh cũ (tránh xung đột)
         if (context.Categories.Any(c => c.Name == "Outerwear"))
         {

@@ -1,4 +1,4 @@
-﻿@model BTT3_KimNgan.Models.Product
+@model BTT3_KimNgan.Models.Product
 
 @{
     ViewData["Title"] = "Thêm Sản Phẩm Mới - Luxe Fashion";
@@ -106,7 +106,7 @@
 
         <div class="mb-3">
             <label asp-for="CategoryId" class="form-label">Danh Mục Sản Phẩm</label>
-            <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.CategoryList">
+            <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.CategoryId">
                 <option value="" disabled selected>-- Chọn danh mục thời trang --</option>
             </select>
             <span asp-validation-for="CategoryId" class="text-danger" style="font-size: 12px;"></span>

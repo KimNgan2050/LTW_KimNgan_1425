@@ -1,4 +1,4 @@
-﻿@model BTT3_KimNgan.Models.Product
+@model BTT3_KimNgan.Models.Product
 
 @{
     ViewData["Title"] = "Chỉnh Sửa Sản Phẩm - LUXÉ Admin";
@@ -7,7 +7,7 @@
 
 <div class="container my-5">
     <div class="row justify-content-center">
-        <div class="col-md-7">
+        <div class="col-md-10">
             <div class="luxe-admin-card p-5 border">
                 <div class="mb-4">
                     <h2 class="luxe-form-title">CẬP NHẬT SẢN PHẨM</h2>
@@ -15,50 +15,72 @@
                     <hr />
                 </div>
 
-                <form asp-area="Admin" asp-controller="Product" asp-action="Edit" method="post">
+                <form asp-area="Admin" asp-controller="Product" asp-action="Edit" method="post" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
                     <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="ImageUrl" />
 
-                    <div class="form-group mb-4">
-                        <label asp-for="Name" class="luxe-label">Tên sản phẩm</label>
-                        <input asp-for="Name" class="form-control luxe-input-form" />
-                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    <div class="row mb-4 align-items-center">
+                        <label asp-for="Name" class="col-md-3 luxe-label mb-0">Tên sản phẩm</label>
+                        <div class="col-md-9">
+                            <input asp-for="Name" class="form-control luxe-input-form" />
+                            <span asp-validation-for="Name" class="text-danger small"></span>
+                        </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6 form-group mb-4">
-                            <label asp-for="Sku" class="luxe-label">Mã sản phẩm (SKU)</label>
+                    <div class="row mb-4 align-items-center">
+                        <label asp-for="Sku" class="col-md-3 luxe-label mb-0">Mã sản phẩm (SKU)</label>
+                        <div class="col-md-9">
                             <input asp-for="Sku" class="form-control luxe-input-form" />
                             <span asp-validation-for="Sku" class="text-danger small"></span>
                         </div>
-                        <div class="col-md-6 form-group mb-4">
-                            <label asp-for="Price" class="luxe-label">Giá bán (VNĐ)</label>
+                    </div>
+
+                    <div class="row mb-4 align-items-center">
+                        <label asp-for="Price" class="col-md-3 luxe-label mb-0">Giá bán (VNĐ)</label>
+                        <div class="col-md-9">
                             <input asp-for="Price" type="number" class="form-control luxe-input-form" />
                             <span asp-validation-for="Price" class="text-danger small"></span>
                         </div>
                     </div>
 
-                    <div class="form-group mb-4">
-                        <label asp-for="ImageUrl" class="luxe-label">Đường dẫn hình ảnh (URL)</label>
-                        <input asp-for="ImageUrl" class="form-control luxe-input-form" />
-                        <span asp-validation-for="ImageUrl" class="text-danger small"></span>
+                    <div class="row mb-4 align-items-center">
+                        <label class="col-md-3 luxe-label mb-0">Hình ảnh sản phẩm</label>
+                        <div class="col-md-9">
+                            <input type="file" name="file" class="form-control luxe-input-form" accept="image/*" />
+                            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                            {
+                                <div class="mt-2">
+                                    <img src="@Model.ImageUrl" alt="Current Image" style="max-height: 100px; border: 1px solid #eaeaea;" />
+                                </div>
+                            }
+                            <span asp-validation-for="ImageUrl" class="text-danger small"></span>
+                        </div>
                     </div>
 
-                    <div class="form-group mb-4">
-                        <label asp-for="CategoryId" class="luxe-label">Danh mục sản phẩm</label>
-                        <input asp-for="CategoryId" type="number" class="form-control luxe-input-form" />
-                        <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                    <div class="row mb-4 align-items-center">
+                        <label asp-for="CategoryId" class="col-md-3 luxe-label mb-0">Danh mục sản phẩm</label>
+                        <div class="col-md-9">
+                            <select asp-for="CategoryId" asp-items="ViewBag.CategoryList" class="form-select luxe-input-form">
+                                <option disabled selected>-- Chọn danh mục thời trang --</option>
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                        </div>
                     </div>
 
-                    <div class="form-group mb-5">
-                        <label asp-for="Description" class="luxe-label">Mô tả chi tiết</label>
-                        <textarea asp-for="Description" class="form-control luxe-input-form" rows="4"></textarea>
-                        <span asp-validation-for="Description" class="text-danger small"></span>
+                    <div class="row mb-5 align-items-start">
+                        <label asp-for="Description" class="col-md-3 luxe-label mt-2">Mô tả chi tiết</label>
+                        <div class="col-md-9">
+                            <textarea asp-for="Description" class="form-control luxe-input-form" rows="4"></textarea>
+                            <span asp-validation-for="Description" class="text-danger small"></span>
+                        </div>
                     </div>
 
-                    <div class="d-flex gap-3">
-                        <button type="submit" class="btn btn-luxe-submit-admin flex-grow-1">CẬP NHẬT</button>
-                        <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-luxe-cancel-admin">HỦY BỎ</a>
+                    <div class="row">
+                        <div class="col-md-9 offset-md-3 d-flex gap-3">
+                            <button type="submit" class="btn btn-luxe-submit-admin flex-grow-1">CẬP NHẬT</button>
+                            <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-luxe-cancel-admin">HỦY BỎ</a>
+                        </div>
                     </div>
                 </form>
             </div>

@@ -1,0 +1,119 @@
+@model BTT3_KimNgan.Models.Category
+
+@{
+    ViewData["Title"] = "Thêm danh mục mới - LUXÉ Admin";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="luxe-admin-card p-5 border">
+                <div class="mb-4">
+                    <h2 class="luxe-form-title">THÊM DANH MỤC</h2>
+                    <p class="text-muted small text-uppercase tracking-wider">Nhập tên danh mục thời trang mới cho hệ thống LUXÉ</p>
+                    <hr />
+                </div>
+
+                <form asp-area="Admin" asp-controller="Category" asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="row mb-4 align-items-center">
+                        <label asp-for="Name" class="col-md-3 luxe-label mb-0">Tên danh mục</label>
+                        <div class="col-md-9">
+                            <input asp-for="Name" class="form-control luxe-input-form" placeholder="Ví dụ: Đồ thể thao, Giày dép..." required />
+                            <span asp-validation-for="Name" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5">
+                        <div class="col-md-9 offset-md-3 d-flex gap-3">
+                            <button type="submit" class="btn btn-luxe-submit-admin flex-grow-1">LƯU DANH MỤC</button>
+                            <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="btn btn-luxe-cancel-admin">HỦY BỎ</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .luxe-form-title {
+        font-family: 'Playfair Display', 'Inter', sans-serif;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: #111111;
+        margin: 0;
+    }
+
+    .tracking-wider {
+        letter-spacing: 1px;
+    }
+
+    .luxe-label {
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        text-uppercase: uppercase;
+        letter-spacing: 1px;
+        color: #444444;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .luxe-input-form {
+        border-radius: 0 !important;
+        border: 1px solid #e0e0e0 !important;
+        padding: 12px 16px !important;
+        font-family: 'Inter', sans-serif;
+        font-size: 14px;
+        color: #111111;
+        transition: border-color 0.2s;
+    }
+
+    .luxe-input-form:focus {
+        border-color: #111111 !important;
+        box-shadow: none !important;
+    }
+
+    .btn-luxe-submit-admin {
+        background-color: #111111;
+        color: #ffffff;
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        padding: 14px;
+        border-radius: 0;
+        border: none;
+        transition: background-color 0.2s;
+    }
+
+        .btn-luxe-submit-admin:hover {
+            background-color: #333333;
+            color: #ffffff;
+        }
+
+    .btn-luxe-cancel-admin {
+        background-color: #ffffff;
+        color: #777777;
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        padding: 14px 28px;
+        border-radius: 0;
+        border: 1px solid #e0e0e0;
+        text-decoration: none;
+        text-align: center;
+        transition: all 0.2s;
+    }
+
+        .btn-luxe-cancel-admin:hover {
+            background-color: #fafafa;
+            color: #111111;
+            border-color: #111111;
+        }
+</style>

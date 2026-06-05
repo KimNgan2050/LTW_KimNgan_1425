@@ -1,0 +1,15 @@
+@inject SignInManager<BTT3_KimNgan.Models.ApplicationUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+<ul class="luxe-manage-nav">
+    <li><a class="luxe-nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Thông tin cá nhân</a></li>
+    <li><a class="luxe-nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Thay đổi Email</a></li>
+    <li><a class="luxe-nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Đổi mật khẩu</a></li>
+    @if (hasExternalLogins)
+    {
+        <li><a id="external-login" class="luxe-nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">Liên kết ngoài</a></li>
+    }
+    <li><a class="luxe-nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Bảo mật 2 lớp</a></li>
+    <li><a class="luxe-nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Dữ liệu cá nhân</a></li>
+</ul>

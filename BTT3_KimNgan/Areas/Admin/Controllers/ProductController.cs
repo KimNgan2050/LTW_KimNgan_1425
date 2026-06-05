@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering; // Bắt buộc phải có để sử dụng SelectListItem cho Dropdown
 using BTT3_KimNgan.Models;
 using BTT3_KimNgan.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace BTT3_KimNgan.Areas.Admin.Controllers
 {
@@ -13,10 +16,12 @@ namespace BTT3_KimNgan.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(ApplicationDbContext context)
+        public ProductController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // ==========================================================
@@ -60,10 +65,29 @@ namespace BTT3_KimNgan.Areas.Admin.Controllers
         // TRANG THÊM SẢN PHẨM (CREATE - POST: XỬ LÝ LƯU VÀO SQL)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Product product)
+        public IActionResult Create(Product product, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
+                if (file != null && file.Length > 0)
+                {
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"images\products");
+
+                    if (!Directory.Exists(productPath))
+                    {
+                        Directory.CreateDirectory(productPath);
+                    }
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    product.ImageUrl = @"/images/products/" + fileName;
+                }
+
                 _context.Products.Add(product);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
@@ -103,7 +127,7 @@ namespace BTT3_KimNgan.Areas.Admin.Controllers
         // TRANG SỬA SẢN PHẨM (EDIT - POST: CẬP NHẬT BIẾN ĐỘNG VÀO SQL)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Product product)
+        public IActionResult Edit(int id, Product product, IFormFile? file)
         {
             if (id != product.Id) return NotFound();
 
@@ -111,6 +135,35 @@ namespace BTT3_KimNgan.Areas.Admin.Controllers
             {
                 try
                 {
+                    if (file != null && file.Length > 0)
+                    {
+                        string wwwRootPath = _webHostEnvironment.WebRootPath;
+                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                        string productPath = Path.Combine(wwwRootPath, @"images\products");
+
+                        if (!Directory.Exists(productPath))
+                        {
+                            Directory.CreateDirectory(productPath);
+                        }
+
+                        // Xóa ảnh cũ nếu có
+                        if (!string.IsNullOrEmpty(product.ImageUrl) && !product.ImageUrl.Contains("placeholder") && !product.ImageUrl.StartsWith("http"))
+                        {
+                            var oldImagePath = Path.Combine(wwwRootPath, product.ImageUrl.TrimStart('/'));
+                            if (System.IO.File.Exists(oldImagePath))
+                            {
+                                System.IO.File.Delete(oldImagePath);
+                            }
+                        }
+
+                        using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+                        }
+
+                        product.ImageUrl = @"/images/products/" + fileName;
+                    }
+
                     _context.Products.Update(product);
                     _context.SaveChanges();
                 }
@@ -154,6 +207,16 @@ namespace BTT3_KimNgan.Areas.Admin.Controllers
             var product = _context.Products.Find(id);
             if (product != null)
             {
+                // Xóa file ảnh trên disk nếu có
+                if (!string.IsNullOrEmpty(product.ImageUrl) && !product.ImageUrl.Contains("placeholder") && !product.ImageUrl.StartsWith("http"))
+                {
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    var imagePath = Path.Combine(wwwRootPath, product.ImageUrl.TrimStart('/'));
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        System.IO.File.Delete(imagePath);
+                    }
+                }
                 _context.Products.Remove(product);
                 _context.SaveChanges();
             }

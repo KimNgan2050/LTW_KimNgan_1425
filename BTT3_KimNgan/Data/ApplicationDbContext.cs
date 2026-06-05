@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 // Bổ sung thư viện Identity để có thể kế thừa IdentityDbContext
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using BTT3_KimNgan.Models;
@@ -44,6 +44,13 @@ namespace BTT3_KimNgan.Data
                 .WithMany(s => s.ProductVariants)
                 .HasForeignKey(pv => pv.SizeId)
                 .OnDelete(DeleteBehavior.Cascade); // Xóa size thì tự động xóa biến thể liên quan
+
+            // 3. Cấu hình xóa Cascade giữa Category và Product
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

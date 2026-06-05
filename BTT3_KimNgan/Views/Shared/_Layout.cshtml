@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="utf-8" />
@@ -247,8 +247,17 @@
                 <nav class="d-none d-md-flex">
                     <a class="nav-link-luxe" asp-area="" asp-controller="Home" asp-action="Index">Trang Chủ</a>
                     <a class="nav-link-luxe" asp-area="" asp-controller="Products" asp-action="Index">Cửa Hàng</a>
-                    <a class="nav-link-luxe" href="/Products?category=T-shirt">T-Shirt</a>
-                    <a class="nav-link-luxe" href="/Products?category=Hoodie">Hoodie</a>
+                    @if (!(User.Identity.IsAuthenticated && User.IsInRole(BTT3_KimNgan.Models.SD.Role_Admin)))
+                    {
+                        <a class="nav-link-luxe" href="/Products?category=T-shirt">T-Shirt</a>
+                        <a class="nav-link-luxe" href="/Products?category=Hoodie">Hoodie</a>
+                    }
+                    @if (User.Identity.IsAuthenticated && User.IsInRole(BTT3_KimNgan.Models.SD.Role_Admin))
+                    {
+                        <a class="nav-link-luxe text-danger fw-bold" asp-area="Admin" asp-controller="Product" asp-action="Index">QL Sản Phẩm</a>
+                        <a class="nav-link-luxe text-danger fw-bold" asp-area="Admin" asp-controller="Category" asp-action="Index">QL Danh Mục</a>
+                        <a class="nav-link-luxe text-danger fw-bold" asp-area="Admin" asp-controller="User" asp-action="Index">QL Tài Khoản</a>
+                    }
                 </nav>
 
                 <div class="d-flex align-items-center gap-3">

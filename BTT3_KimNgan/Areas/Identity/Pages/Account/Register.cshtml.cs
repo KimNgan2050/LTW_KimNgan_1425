@@ -1,4 +1,4 @@
-﻿#nullable disable
+#nullable disable
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -59,6 +59,11 @@ namespace BTT3_KimNgan.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [Required(ErrorMessage = "Vui lòng nhập địa chỉ của bạn.")]
+            [DataType(DataType.Text)]
+            [Display(Name = "Địa chỉ")]
+            public string Address { get; set; }
+
             [Required(ErrorMessage = "Vui lòng nhập mật khẩu.")]
             [StringLength(100, ErrorMessage = "{0} phải dài từ {2} đến tối đa {1} ký tự.", MinimumLength = 6)]
             [DataType(DataType.Password)]
@@ -102,7 +107,8 @@ namespace BTT3_KimNgan.Areas.Identity.Pages.Account
                 {
                     UserName = Input.Email,
                     Email = Input.Email,
-                    FullName = Input.FullName
+                    FullName = Input.FullName,
+                    Address = Input.Address
                 };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);

@@ -1,0 +1,128 @@
+@model IEnumerable<BTT3_KimNgan.Models.UserViewModel>
+
+@{
+    ViewData["Title"] = "Quản lý tài khoản - LUXÉ Admin";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="luxe-admin-container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="luxe-admin-title">QUẢN LÝ TÀI KHOẢN</h2>
+            <p class="text-muted small text-uppercase tracking-wider">Quản lý phân quyền và thông tin thành viên hệ thống LUXÉ</p>
+        </div>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="table-responsive luxe-table-wrapper">
+        <table class="table table-hover align-middle m-0">
+            <thead>
+                <tr>
+                    <th style="width: 20%;">Họ và tên</th>
+                    <th style="width: 25%;">Email</th>
+                    <th style="width: 15%;">Số tuổi</th>
+                    <th style="width: 20%;">Địa chỉ</th>
+                    <th style="width: 10%;">Vai trò</th>
+                    <th style="width: 10%;" class="text-end">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <div class="fw-bold text-dark">@item.FullName</div>
+                        </td>
+                        <td>@item.Email</td>
+                        <td>@(string.IsNullOrEmpty(item.Age) ? "-" : item.Age)</td>
+                        <td>@(string.IsNullOrEmpty(item.Address) ? "-" : item.Address)</td>
+                        <td>
+                            @if (item.Role == "Admin")
+                            {
+                                <span class="badge bg-dark text-white border tracking-wider">Admin</span>
+                            }
+                            else if (item.Role == "Employee")
+                            {
+                                <span class="badge bg-secondary text-white border tracking-wider">Employee</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-light text-dark border tracking-wider">@item.Role</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end gap-2">
+                                <a asp-area="Admin" asp-controller="User" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary luxe-btn-action">
+                                    Sửa
+                                </a>
+                                <form asp-area="Admin" asp-controller="User" asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa tài khoản này không?');" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger luxe-btn-action">
+                                        Xóa
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .luxe-admin-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .luxe-admin-title {
+        font-family: 'Playfair Display', 'Inter', sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        color: #111111;
+        margin: 0;
+    }
+
+    .tracking-wider {
+        letter-spacing: 1px;
+    }
+
+    .luxe-table-wrapper {
+        border: 1px solid #eeeeee;
+        background-color: #ffffff;
+    }
+
+        .luxe-table-wrapper th {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            text-uppercase: uppercase;
+            letter-spacing: 1px;
+            background-color: #fafafa;
+            color: #555555;
+            padding: 16px;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .luxe-table-wrapper td {
+            padding: 16px;
+            border-bottom: 1px solid #f6f6f6;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+        }
+
+    .luxe-btn-action {
+        border-radius: 0;
+        font-size: 12px;
+        padding: 5px 14px;
+    }
+</style>
