@@ -77,24 +77,24 @@
 <div class="container luxe-form-container">
     <h2 class="form-title">Thêm Sản Phẩm Mới</h2>
 
-    <form asp-action="Create">
+    <form asp-area="Admin" asp-controller="Product" asp-action="Create" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger mb-3" style="font-size: 13px;"></div>
 
         <div class="mb-3">
             <label asp-for="Name" class="form-label">Tên Sản Phẩm</label>
-            <input asp-for="Name" class="form-control" placeholder="Ví dụ: MÁY TÍNH XÁCH TAY LUXE BOOK" />
+            <input asp-for="Name" class="form-control" placeholder="Ví dụ: STRUCTURED WOOL OVERCOAT" />
             <span asp-validation-for="Name" class="text-danger" style="font-size: 12px;"></span>
         </div>
 
         <div class="mb-3">
             <label asp-for="Sku" class="form-label">Mã Sản Phẩm (SKU)</label>
-            <input asp-for="Sku" class="form-control" placeholder="Ví dụ: LAP-2026-LX-01" />
+            <input asp-for="Sku" class="form-control" placeholder="Ví dụ: LFA-2026-WO-01" />
             <span asp-validation-for="Sku" class="text-danger" style="font-size: 12px;"></span>
         </div>
 
         <div class="mb-3">
             <label asp-for="Price" class="form-label">Giá Bán (VNĐ)</label>
-            <input asp-for="Price" class="form-control" type="number" placeholder="Ví dụ: 15500000" />
+            <input asp-for="Price" class="form-control" type="number" placeholder="Ví dụ: 895000" />
             <span asp-validation-for="Price" class="text-danger" style="font-size: 12px;"></span>
         </div>
 
@@ -106,22 +106,22 @@
 
         <div class="mb-3">
             <label asp-for="CategoryId" class="form-label">Danh Mục Sản Phẩm</label>
-            <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.CategoryId">
-                <option value="">-- Chọn danh mục --</option>
+            <select asp-for="CategoryId" class="form-select" asp-items="ViewBag.CategoryList">
+                <option value="" disabled selected>-- Chọn danh mục thời trang --</option>
             </select>
             <span asp-validation-for="CategoryId" class="text-danger" style="font-size: 12px;"></span>
         </div>
 
         <div class="mb-4">
             <label asp-for="Description" class="form-label">Mô Tả Sản Phẩm</label>
-            <textarea asp-for="Description" class="form-control" rows="5" placeholder="Nhập cấu hình thiết bị hoặc thông tin chi tiết sản phẩm..."></textarea>
+            <textarea asp-for="Description" class="form-control" rows="5" placeholder="Nhập chất liệu, form dáng hoặc thông tin chi tiết sản phẩm..."></textarea>
             <span asp-validation-for="Description" class="text-danger" style="font-size: 12px;"></span>
         </div>
 
         <button type="submit" class="btn btn-submit">HOÀN TẤT THÊM MỚI</button>
     </form>
 
-    <a asp-action="Index" class="back-link">Quay lại cửa hàng</a>
+    <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="back-link">Quay lại trang quản trị</a>
 </div>
 
 @section Scripts {

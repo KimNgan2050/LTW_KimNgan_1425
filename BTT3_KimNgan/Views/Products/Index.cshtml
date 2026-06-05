@@ -113,7 +113,6 @@
         color: #707070;
     }
 
-    /* Định dạng lại khu vực nút chức năng nằm hàng ngang */
     .admin-actions {
         font-size: 12px;
         margin-top: 10px;
@@ -138,11 +137,14 @@
 </style>
 
 <div class="container luxe-shop-container">
-    <div class="row mb-3">
-        <div class="col text-end">
-            <a asp-action="Create" class="btn btn-dark btn-sm rounded-0" style="font-size: 11px; letter-spacing: 1px; padding: 10px 20px;">+ THÊM SẢN PHẨM MỚI</a>
+    @if (User.Identity.IsAuthenticated && User.IsInRole(BTT3_KimNgan.Models.SD.Role_Admin))
+    {
+        <div class="row mb-3">
+            <div class="col text-end">
+                <a asp-area="Admin" asp-controller="Product" asp-action="Create" class="btn btn-dark btn-sm rounded-0" style="font-size: 11px; letter-spacing: 1px; padding: 10px 20px;">+ THÊM SẢN PHẨM MỚI</a>
+            </div>
         </div>
-    </div>
+    }
 
     <div class="row">
         <div class="col-md-3">
@@ -179,7 +181,6 @@
                     <div class="product-card-item">
                         <a href="/Products/Details/@item.Id" style="text-decoration: none;">
                             <div class="product-img-box">
-                                <!-- ĐÃ TỐI ƯU: Tự động bắt lỗi và thay thế bằng hình ảnh dự phòng chất lượng cao -->
                                 @if (!string.IsNullOrEmpty(item.ImageUrl))
                                 {
                                     <img src="@item.ImageUrl" alt="@item.Name" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1434389677669-e08b4cac3105?q=80&w=600';" />
@@ -195,10 +196,14 @@
 
                         <div class="admin-actions">
                             <a href="/Cart/AddToCart/@item.Id" class="btn-add-cart-link">Thêm vào giỏ</a>
-                            <span class="mx-1">|</span>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Sửa</a>
-                            <span class="mx-1">|</span>
-                            <a asp-action="Delete" asp-route-id="@item.Id">Xóa</a>
+
+                            @if (User.Identity.IsAuthenticated && User.IsInRole(BTT3_KimNgan.Models.SD.Role_Admin))
+                            {
+                                <span class="mx-1">|</span>
+                                <a asp-area="Admin" asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id">Sửa</a>
+                                <span class="mx-1">|</span>
+                                <a asp-area="Admin" asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id">Xóa</a>
+                            }
                         </div>
                     </div>
                 }

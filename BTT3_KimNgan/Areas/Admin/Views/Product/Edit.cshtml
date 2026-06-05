@@ -1,0 +1,116 @@
+﻿@model BTT3_KimNgan.Models.Product
+
+@{
+    ViewData["Title"] = "Chỉnh Sửa Sản Phẩm - LUXÉ Admin";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="luxe-admin-card p-5 border">
+                <div class="mb-4">
+                    <h2 class="luxe-form-title">CẬP NHẬT SẢN PHẨM</h2>
+                    <p class="text-muted small text-uppercase tracking-wider">Chỉnh sửa thông tin sản phẩm mã số #@Model.Id</p>
+                    <hr />
+                </div>
+
+                <form asp-area="Admin" asp-controller="Product" asp-action="Edit" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="form-group mb-4">
+                        <label asp-for="Name" class="luxe-label">Tên sản phẩm</label>
+                        <input asp-for="Name" class="form-control luxe-input-form" />
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group mb-4">
+                            <label asp-for="Sku" class="luxe-label">Mã sản phẩm (SKU)</label>
+                            <input asp-for="Sku" class="form-control luxe-input-form" />
+                            <span asp-validation-for="Sku" class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 form-group mb-4">
+                            <label asp-for="Price" class="luxe-label">Giá bán (VNĐ)</label>
+                            <input asp-for="Price" type="number" class="form-control luxe-input-form" />
+                            <span asp-validation-for="Price" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="ImageUrl" class="luxe-label">Đường dẫn hình ảnh (URL)</label>
+                        <input asp-for="ImageUrl" class="form-control luxe-input-form" />
+                        <span asp-validation-for="ImageUrl" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="CategoryId" class="luxe-label">Danh mục sản phẩm</label>
+                        <input asp-for="CategoryId" type="number" class="form-control luxe-input-form" />
+                        <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-group mb-5">
+                        <label asp-for="Description" class="luxe-label">Mô tả chi tiết</label>
+                        <textarea asp-for="Description" class="form-control luxe-input-form" rows="4"></textarea>
+                        <span asp-validation-for="Description" class="text-danger small"></span>
+                    </div>
+
+                    <div class="d-flex gap-3">
+                        <button type="submit" class="btn btn-luxe-submit-admin flex-grow-1">CẬP NHẬT</button>
+                        <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="btn btn-luxe-cancel-admin">HỦY BỎ</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .luxe-form-title {
+        font-family: 'Playfair Display', sans-serif;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: #111111;
+    }
+
+    .luxe-label {
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        text-uppercase: uppercase;
+        letter-spacing: 1px;
+        color: #444444;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .luxe-input-form {
+        border-radius: 0 !important;
+        border: 1px solid #e0e0e0 !important;
+        padding: 12px 16px !important;
+    }
+
+    .btn-luxe-submit-admin {
+        background-color: #111111;
+        color: #ffffff;
+        padding: 14px;
+        border-radius: 0;
+        border: none;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 1px;
+    }
+
+    .btn-luxe-cancel-admin {
+        background-color: #ffffff;
+        color: #777777;
+        padding: 14px 28px;
+        border-radius: 0;
+        border: 1px solid #e0e0e0;
+        text-align: center;
+        text-decoration: none;
+        font-size: 12px;
+    }
+</style>

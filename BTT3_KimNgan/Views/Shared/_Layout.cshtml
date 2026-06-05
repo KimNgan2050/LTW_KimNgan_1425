@@ -141,6 +141,97 @@
             padding: 10px 20px;
             border: none;
         }
+
+        /* ==========================================================
+                   3. CẬP NHẬT: CSS ĐỒNG BỘ CHO FORM ĐĂNG NHẬP / ĐĂNG KÝ LUXÉ
+                   ========================================================== */
+        .luxe-auth-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e5e5;
+            padding: 45px 35px;
+            margin-top: 30px;
+        }
+
+        .auth-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-align: center;
+            color: #000000;
+            margin-bottom: 8px;
+        }
+
+        .auth-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            color: #777777;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .auth-divider {
+            border-top: 1px solid #eeeeee;
+            margin-bottom: 25px;
+            opacity: 1;
+        }
+
+        .luxe-input {
+            border-radius: 0 !important;
+            border: 1px solid #e0e0e0 !important;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px !important;
+            height: 54px !important;
+        }
+
+            .luxe-input:focus {
+                border-color: #000000 !important;
+                box-shadow: none !important;
+            }
+
+        .form-floating > label {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: #888888;
+            padding-left: 15px;
+        }
+
+        .rem-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            color: #555555;
+            letter-spacing: 0.5px;
+        }
+
+        .luxe-checkbox:checked {
+            background-color: #000000 !important;
+            border-color: #000000 !important;
+        }
+
+        .luxe-checkbox:focus {
+            box-shadow: none !important;
+            border-color: #000000 !important;
+        }
+
+        .btn-luxe-submit {
+            border-radius: 0;
+            background-color: #000000;
+            color: #ffffff;
+            border: 1px solid #000000;
+            padding: 14px 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+            .btn-luxe-submit:hover {
+                background-color: #ffffff;
+                color: #000000;
+            }
     </style>
 </head>
 <body>
@@ -160,7 +251,9 @@
                     <a class="nav-link-luxe" href="/Products?category=Hoodie">Hoodie</a>
                 </nav>
 
-                <div>
+                <div class="d-flex align-items-center gap-3">
+                    <partial name="_LoginPartial" />
+
                     <a class="cart-icon-btn" asp-controller="Cart" asp-action="Index">
                         Giỏ Hàng
                     </a>
@@ -225,7 +318,7 @@
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/css/bootstrap.min.css"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

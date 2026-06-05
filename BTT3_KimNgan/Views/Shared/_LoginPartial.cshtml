@@ -1,0 +1,87 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Identity
+@using BTT3_KimNgan.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    // 1. XỬ LÝ LOGIC C# LÊN TRÊN CÙNG ĐỂ TRÁNH LỖI XUNG ĐỘT NGOẶC NHỌN RZ1010
+    string displayName = "";
+    bool IsLoggedIn = SignInManager.IsSignedIn(User);
+
+    if (IsLoggedIn)
+    {
+        // KHẮC PHỤC CẢNH BÁO CS8600: Thêm dấu hỏi chấm (?) để cho phép giá trị null an toàn
+        ApplicationUser? currentUser = await UserManager.GetUserAsync(User);
+        displayName = currentUser?.FullName ?? UserManager.GetUserName(User) ?? "Khách hàng";
+    }
+}
+
+<div class="luxe-auth-wrapper">
+    @if (IsLoggedIn)
+    {
+        <span class="auth-welcome">Xin chào, @displayName!</span>
+        <form class="form-inline d-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button type="submit" class="auth-link-btn">Đăng xuất</button>
+        </form>
+    }
+    else
+    {
+        <a class="auth-link" asp-area="Identity" asp-page="/Account/Register">Đăng ký</a>
+        <span class="auth-divider">/</span>
+        <a class="auth-link" asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a>
+    }
+</div>
+
+<style>
+    /* Định dạng cụm Đăng ký / Đăng nhập nằm ngang sang trọng */
+    .luxe-auth-wrapper {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+    }
+
+    .auth-link {
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        color: #555555;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+        .auth-link:hover {
+            color: #000000;
+        }
+
+    .auth-divider {
+        font-size: 11px;
+        color: #cccccc;
+        margin: 0 8px;
+    }
+
+    .auth-welcome {
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        color: #333333;
+        margin-right: 12px;
+    }
+
+    .auth-link-btn {
+        background: none;
+        border: none;
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        color: #555555;
+        padding: 0;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+        .auth-link-btn:hover {
+            color: #000000;
+        }
+</style>

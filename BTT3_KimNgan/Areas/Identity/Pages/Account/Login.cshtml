@@ -1,0 +1,47 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Đăng nhập";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="luxe-auth-card">
+                <h2 class="auth-title">Đăng Nhập</h2>
+                <p class="auth-subtitle">Chào mừng bạn quay trở lại với LUXÉ</p>
+                <hr class="auth-divider" />
+
+                <form id="account" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Email" class="form-control luxe-input" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                        <label asp-for="Input.Email" class="form-label">Địa chỉ Email</label>
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Password" class="form-control luxe-input" autocomplete="current-password" aria-required="true" placeholder="password" />
+                        <label asp-for="Input.Password" class="form-label">Mật khẩu</label>
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="checkbox mb-4">
+                        <label asp-for="Input.RememberMe" class="form-label rem-text">
+                            <input class="form-check-input me-2 luxe-checkbox" asp-for="Input.RememberMe" />
+                            Ghi nhớ đăng nhập
+                        </label>
+                    </div>
+
+                    <button id="login-submit" type="submit" class="w-100 btn-luxe-submit">Đăng Nhập</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
