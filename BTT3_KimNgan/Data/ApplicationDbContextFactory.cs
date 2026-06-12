@@ -11,7 +11,7 @@ namespace BTT3_KimNgan.Data
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
             // Hardcode tạm thời chuỗi kết nối tại đây để EF Core tìm thấy ngay lập tức khi Migration
-            string connectionString = "Server=KIMNGANN;Database=LuxeFashionDb;Trusted_Connection=True;TrustServerCertificate=True;";
+            string connectionString = "Server=.\\SQLEXPRESS;Database=LuxeFashionDb;Trusted_Connection=True;TrustServerCertificate=True;";
 
             optionsBuilder.UseSqlServer(connectionString);
 

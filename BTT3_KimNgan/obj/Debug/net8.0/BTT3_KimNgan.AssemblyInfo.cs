@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BTT3_KimNgan")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+26bb5095ff99343a41cf74793861dd19f51a098b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c0624423d770362db1fe1932fb77411a5c1ef43d")]
 [assembly: System.Reflection.AssemblyProductAttribute("BTT3_KimNgan")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BTT3_KimNgan")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

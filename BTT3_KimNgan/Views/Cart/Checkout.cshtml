@@ -1,0 +1,109 @@
+﻿@model BTT3_KimNgan.Models.Order
+
+@{
+    ViewData["Title"] = "Thông Tin Giao Hàng - Luxe Fashion";
+}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+    .luxe-checkout-container {
+        font-family: 'Inter', sans-serif;
+        color: #000;
+        margin-top: 50px;
+        margin-bottom: 80px;
+        max-width: 600px;
+    }
+
+    .checkout-title {
+        font-size: 20px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-weight: 400;
+        margin-bottom: 35px;
+        text-align: center;
+    }
+
+    .checkout-form {
+        background-color: #ffffff;
+        padding: 40px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .form-label {
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: #707070;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .form-control-luxe {
+        width: 100%;
+        border: 1px solid #e0e0e0;
+        border-radius: 0;
+        padding: 15px;
+        font-size: 13px;
+        font-family: 'Inter', sans-serif;
+        margin-bottom: 5px;
+        transition: border-color 0.2s;
+    }
+
+        .form-control-luxe:focus {
+            border-color: #000;
+            outline: none;
+        }
+
+    .btn-submit-order {
+        background-color: #000000;
+        color: #ffffff;
+        border-radius: 0;
+        padding: 16px;
+        font-size: 12px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 600;
+        width: 100%;
+        border: none;
+        margin-top: 25px;
+        transition: background-color 0.2s;
+        cursor: pointer;
+    }
+
+        .btn-submit-order:hover {
+            background-color: #222222;
+        }
+</style>
+
+<div class="container luxe-checkout-container">
+    <h1 class="checkout-title">02. Thông tin giao hàng</h1>
+
+    <form asp-action="Checkout" method="post" class="checkout-form">
+        @Html.AntiForgeryToken()
+
+        <div class="mb-4">
+            <label asp-for="ShippingAddress" class="form-label">Địa chỉ nhận hàng *</label>
+            <input asp-for="ShippingAddress" class="form-control-luxe" placeholder="Số nhà, tên đường, phường/xã, quận/huyện..." />
+            <span asp-validation-for="ShippingAddress" class="text-danger small"></span>
+        </div>
+
+        <div class="mb-4">
+            <label asp-for="Notes" class="form-label">Ghi chú đơn hàng (Không bắt buộc)</label>
+            <textarea asp-for="Notes" class="form-control-luxe" rows="4" placeholder="Ví dụ: Giao giờ hành chính, gọi trước khi giao hàng..."></textarea>
+        </div>
+
+        <hr style="border-color: #e0e0e0; margin: 30px 0;" />
+
+        <button type="submit" class="btn-submit-order">Xác nhận đặt hàng</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

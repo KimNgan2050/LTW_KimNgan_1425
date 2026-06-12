@@ -20,7 +20,8 @@ namespace BTT3_KimNgan.Data
         public DbSet<Size> Sizes { get; set; }
         public DbSet<ProductVariant> ProductVariants { get; set; }
         public DbSet<Review> Reviews { get; set; }
-
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
         // Cấu hình mối quan hệ giữa các bảng (Fluent API)
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
