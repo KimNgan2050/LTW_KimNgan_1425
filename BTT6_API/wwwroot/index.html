@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Sản Phẩm - Toàn Diện Tuần 6</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container py-5">
+        <h1 class="text-center mb-5 text-primary fw-bold">HỆ THỐNG QUẢN LÝ SẢN PHẨM (RESTful API)</h1>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-primary text-white fw-bold">
+                        <span id="formTitle">Thêm Sản Phẩm Mới</span>
+                    </div>
+                    <div class="card-body">
+                        <input type="hidden" id="prodId">
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Tên sản phẩm</label>
+                            <input type="text" id="prodName" class="form-control" placeholder="Nhập tên sản phẩm...">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Giá sản phẩm (VNĐ)</label>
+                            <input type="number" id="prodPrice" class="form-control" placeholder="Nhập giá tiền...">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Mô tả sản phẩm</label>
+                            <textarea id="prodDesc" class="form-control" rows="3" placeholder="Nhập mô tả ngắn..."></textarea>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button id="btnSave" class="btn btn-success" onclick="saveProduct()">Lưu Sản Phẩm</button>
+                            <button id="btnCancel" class="btn btn-secondary d-none" onclick="resetForm()">Hủy Bỏ / Thêm Mới</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-dark text-white fw-bold d-flex justify-content-between align-items-center">
+                        <span>Danh Sách Sản Phẩm Hiện Có</span>
+                        <button class="btn btn-light btn-sm fw-bold" onclick="loadProducts()">Làm Mới 🔄</button>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped align-middle mb-0">
+                                <thead class="table-secondary">
+                                    <tr>
+                                        <th style="width: 8%">ID</th>
+                                        <th style="width: 32%">Tên sản phẩm</th>
+                                        <th style="width: 20%">Giá cả</th>
+                                        <th style="width: 25%">Mô tả</th>
+                                        <th style="width: 15%" class="text-center">Hành động</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productTableBody">
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted py-4">Đang tải dữ liệu từ API...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cổng kết nối chuẩn 7216 theo máy của bạn
+        const apiUrl = 'https://localhost:7216/api/products';
+
+        // 1. [GET] Lấy danh sách sản phẩm
+        function loadProducts() {
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) throw new Error('Không thể kết nối với API Server.');
+                    return response.json();
+                })
+                .then(products => {
+                    const tbody = document.getElementById('productTableBody');
+                    tbody.innerHTML = '';
+
+                    if (products.length === 0) {
+                        tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-4">Chưa có sản phẩm nào trong cơ sở dữ liệu.</td></tr>`;
+                        return;
+                    }
+
+                    products.forEach(p => {
+                        // Bảo vệ an toàn dữ liệu số tiền và chuỗi
+                        const priceValue = parseFloat(p.price) || 0;
+                        const productName = p.name || 'Không rõ tên';
+
+                        tbody.innerHTML += `
+                                <tr>
+                                    <td class="fw-bold text-secondary">${p.id}</td>
+                                    <td class="fw-bold text-dark">${productName}</td>
+                                    <td class="text-success fw-bold">${priceValue.toLocaleString('vi-VN')} đ</td>
+                                    <td class="text-muted text-truncate" style="max-width: 200px;">${p.description || '---'}</td>
+                                    <td class="text-center">
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-warning btn-sm" onclick="editProduct(${p.id})">Sửa</button>
+                                            <button class="btn btn-danger btn-sm" onclick="deleteProduct(${p.id})">Xóa</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `;
+                    });
+                })
+                .catch(error => {
+                    console.error('Lỗi:', error);
+                    document.getElementById('productTableBody').innerHTML = `<tr><td colspan="5" class="text-center text-danger py-4">Lỗi kết nối API Server. Hãy kiểm tra xem bạn đã bật Visual Studio chưa!</td></tr>`;
+                });
+        }
+
+        // 2. [POST/PUT] Thêm hoặc Cập nhật sản phẩm
+        function saveProduct() {
+            const id = document.getElementById('prodId').value;
+            const name = document.getElementById('prodName').value.trim();
+            const price = document.getElementById('prodPrice').value;
+            const description = document.getElementById('prodDesc').value.trim();
+
+            if (!name || !price) {
+                alert('Vui lòng điền đầy đủ Tên sản phẩm và Giá tiền!');
+                return;
+            }
+
+            const productData = {
+                name: name,
+                price: parseFloat(price),
+                description: description
+            };
+
+            if (id === '') {
+                // THÊM MỚI [POST]
+                fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(productData)
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Thêm sản phẩm mới thành công!');
+                            resetForm();
+                            loadProducts();
+                        } else {
+                            alert('Lỗi khi thêm sản phẩm mới!');
+                        }
+                    })
+                    .catch(error => console.error('Lỗi:', error));
+            } else {
+                // CẬP NHẬT [PUT]
+                productData.id = parseInt(id);
+
+                fetch(`${apiUrl}/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(productData)
+                })
+                    .then(response => {
+                        if (response.status === 204 || response.ok) {
+                            alert('Cập nhật thông tin sản phẩm thành công!');
+                            resetForm();
+                            loadProducts();
+                        } else {
+                            alert('Lỗi khi cập nhật sản phẩm!');
+                        }
+                    })
+                    .catch(error => console.error('Lỗi:', error));
+            }
+        }
+
+        // 3. [GET {id}] Lấy chi tiết sản phẩm đưa lên form sửa
+        function editProduct(id) {
+            fetch(`${apiUrl}/${id}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Không tìm thấy dữ liệu.');
+                    return response.json();
+                })
+                .then(product => {
+                    document.getElementById('prodId').value = product.id;
+                    document.getElementById('prodName').value = product.name;
+                    document.getElementById('prodPrice').value = product.price;
+                    document.getElementById('prodDesc').value = product.description || '';
+
+                    document.getElementById('formTitle').innerText = `Chỉnh Sửa Sản Phẩm (ID: ${product.id})`;
+                    document.getElementById('btnSave').innerText = 'Cập Nhật Thay Đổi';
+                    document.getElementById('btnSave').className = 'btn btn-warning';
+                    document.getElementById('btnCancel').classList.remove('d-none');
+                })
+                .catch(error => console.error('Lỗi lấy chi tiết:', error));
+        }
+
+        // 4. [DELETE] Xóa sản phẩm
+        function deleteProduct(id) {
+            if (confirm(`Bạn có chắc chắn muốn xóa sản phẩm có ID: ${id} này không?`)) {
+                fetch(`${apiUrl}/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (response.status === 204 || response.ok) {
+                            alert('Đã xóa sản phẩm thành công!');
+                            loadProducts();
+                            if (document.getElementById('prodId').value == id) {
+                                resetForm();
+                            }
+                        } else {
+                            alert('Lỗi, không thể xóa sản phẩm!');
+                        }
+                    })
+                    .catch(error => console.error('Lỗi khi xóa:', error));
+            }
+        }
+
+        // 5. Reset Form
+        function resetForm() {
+            document.getElementById('prodId').value = '';
+            document.getElementById('prodName').value = '';
+            document.getElementById('prodPrice').value = '';
+            document.getElementById('prodDesc').value = '';
+
+            document.getElementById('formTitle').innerText = 'Thêm Sản Phẩm Mới';
+            document.getElementById('btnSave').innerText = 'Lưu Sản Phẩm';
+            document.getElementById('btnSave').className = 'btn btn-success';
+            document.getElementById('btnCancel').classList.add('d-none');
+        }
+
+        window.onload = loadProducts;
+    </script>
+</body>
+</html>
